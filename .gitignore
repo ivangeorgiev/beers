@@ -1,0 +1,17 @@
+/.idea
+/beers/__pycache__
+/beers/api/__pycache__
+/beers/database/__pycache__
+/beers/app.db
+/users/app.db
+/orders/app.db
+/orders/api/__pycache__
+/orders/__pycache__
+/__pycache__
+/clients/__pycache__
+/orders/database/__pycache__
+/tests/.pytest_cache
+/tests/__pycache__
+/users/__pycache__
+/users/api/__pycache__
+/users/database/__pycache__

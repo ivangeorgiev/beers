@@ -1,0 +1,8 @@
+flask_sqlalchemy
+flask_login
+flask
+flask_login
+passlib
+flask_restplus
+invoke
+verify-email
