@@ -2,20 +2,20 @@ import json
 
 
 def test_login(users, beers, orders):
-    resp = users.get('/api/users/exists', query_string={'username': 'hristo'})
+    resp = users.get('/api/users/exists', query_string={'username': 'testuser'})
     assert resp.status_code == 404
 
     # TODO: input validation of register
 
-    data = {'username': 'hristo', 'mail': 'hristo.i.georgiev@gmail.com', 'first_name': 'Hristo', 'last_name': 'Georgiev', 'password': '4csTJdx4'}
+    data = {'username': 'testuser', 'mail': 'test@example.com', 'first_name': 'Test', 'last_name': 'User', 'password': '4csTJdx4'}
     resp = users.post('/api/users/register', data=data)
     print(resp.data)
     assert resp.status_code == 200
     
-    resp = users.get('/api/users/exists', query_string={'username': 'hristo'})
+    resp = users.get('/api/users/exists', query_string={'username': 'testuser'})
     assert resp.status_code == 200
     
-    resp = users.post('/api/users/login', data={'username': 'hristo', 'password': '4csTJdx4'})
+    resp = users.post('/api/users/login', data={'username': 'testuser', 'password': '4csTJdx4'})
     data = json.loads(resp.data)
     token = data['token']
     
