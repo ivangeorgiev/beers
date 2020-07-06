@@ -16,7 +16,6 @@ def test_login(users, beers, orders):
     resp = users.post('/api/users/login', data={'username': 'hristo', 'password': '4csTJdx4'})
     data = json.loads(resp.data)
     token = data['token']
-    print(token)
     
     resp = users.post('/api/users/check_token', data={'token': token})
     assert resp.status_code == 200

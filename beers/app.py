@@ -34,20 +34,19 @@ def initialize_app(flask_app):
     db.init_app(flask_app)
 
 
-def serve_beers():
+def serve_beers(app):
     initialize_app(app)
     log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
     app.run(debug=Settings.FLASK_DEBUG)
 
 
-def setup_beers():
+def setup_beers(app):
     initialize_app(app)
     app.app_context().push()
     db.drop_all()
     db.create_all()
 
     from beers.database.models import Beer
-    Beer.create('Бургаско', 123456, 1.19, 'https://cdncloudcart.com/15635/products/images/206/bira-burgasko-svetlo-500-ml-ken-image_5e24491fc2a15_800x800.jpeg?1579436338')
-    Beer.create('Загорка', 123457, 2.00, 'https://shami.bg/uploads/2019/06/38b3674a0aaee5a32c1193d8cab7104b.png')
-    Beer.create('Tuborg', 123458, 1.50, 'https://cdn.nokovandson.com/crop/276/490/480//I0/I0pLF5nGwJ.png')
+    Beer.seed()
+
 

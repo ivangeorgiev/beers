@@ -7,25 +7,31 @@ from invoke import task
 @task
 def users(c, command):
     if command == 'serve':
-        serve_users()
+        app = Flask(__name__)
+        serve_users(app)
 
     if command == 'setup':
-        setup_users()
+        app = Flask(__name__)
+        setup_users(app)
 
 
 @task
 def beers(c, command):
     if command == 'serve':
-        serve_beers()
+        app = Flask(__name__)
+        serve_beers(app)
 
     if command == 'setup':
-        setup_beers()
+        app = Flask(__name__)
+        setup_beers(app)
 
 
 @task
 def orders(c, command):
     if command == 'serve':
-        serve_orders()
+        app = Flask(__name__)
+        serve_orders(app)
 
     if command == 'setup':
-        setup_orders()
+        app = Flask(__name__)
+        setup_orders(app)
