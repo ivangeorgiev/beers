@@ -12,7 +12,7 @@ def username(value):
 
 def email(value):
     if not verify_email(value):
-        raise ValueError('{0} is not a valid email'.format(email))
+        raise ValueError('{0} is not a valid email'.format(value))
     return value
 
 
