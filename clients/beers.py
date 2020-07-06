@@ -1,3 +1,5 @@
+from datetime import datetime
+from flask import current_app as app
 import requests
 from beers.settings import Settings
 
@@ -16,6 +18,17 @@ class BeerClient:
         return response.json()
 
     def get(self, sku):
+        if app['TESTING'] and sku == 'TESTING_SKU':
+            beer = dict()
+            beer['id'] = 1
+            beer['name'] = 'Test beer'
+            beer['sku'] = 'TESTING_SKU'
+            beer['price'] = 2.5
+            beer['image'] = None
+            beer['time_created'] = datetime.utcnow()
+            beer['time_modified'] = None
+            return beer
+
         url = 'http://{}/api/beers/{}'.format(self.api_url, sku)
         response = requests.get(url)
 

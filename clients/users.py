@@ -1,4 +1,6 @@
 import requests
+from datetime import datetime
+from flask import current_app as app
 from users.settings import Settings
 
 
@@ -32,6 +34,17 @@ class UserClient:
         raise ValueError('Received not supported status code.')
 
     def check_token(self, token):
+        if app.config['TESTING'] and token == 'TESTING_TOKEN':
+            user = dict()
+            user['id'] = 1
+            user['username'] = 'test'
+            user['email'] = 'test@example.com'
+            user['first_name'] = 'Test'
+            user['last_name'] = 'User'
+            user['time_registered'] = datetime.utcnow()
+            user['time_modified'] = None
+            return user
+
         url = 'http://{}/api/users/check_token'.format(self.api_url)
         response = requests.post(url, data=dict(token=token))
 
