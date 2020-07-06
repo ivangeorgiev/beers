@@ -1,28 +1,35 @@
-from clients import UserClient
+import json
 
 
-def test_login(users):
+def test_login(users, beers, orders):
     resp = users.get('/api/users/exists', query_string={'username': 'hristo'})
     assert resp.status_code == 404
-
     
+    data = {'username': 'hristo', 'mail': 'hristo.i.georgiev@gmail.com', 'first_name': 'Hristo', 'last_name': 'Georgiev', 'password': '4csTJdx4'}
+    resp = users.post('/api/users/register', data=data)
+    
+    assert resp.status_code == 200
+    
+    resp = users.get('/api/users/exists', query_string={'username': 'hristo'})
+    assert resp.status_code == 200
+    
+    resp = users.post('/api/users/login', data={'username': 'hristo', 'password': '4csTJdx4'})
+    data = json.loads(resp.data)
+    token = data['token']
+    print(token)
+    
+    resp = users.post('/api/users/check_token', data={'token': token})
+    assert resp.status_code == 200
+    
+    resp = users.post('/api/users/check_token', data={'token': token + '@@@'})
+    assert resp.status_code == 404
+    
+    resp = users.post('/api/users/logout', data={'token': token})
+    assert resp.status_code == 200
+    
+    resp = users.post('/api/users/logout', data={'token': token})
+    assert resp.status_code == 404
+    
+    resp = users.post('/api/users/check_token', data={'token': token})
+    assert resp.status_code == 404
 
-    print(dir(resp))
-
-    assert users.get('/api/users/exists')
-
-
-    return
-
-    client = UserClient()
-    if not client.exists('hristo'):
-        success, data = client.register('hristo', 'hristo.i.georgiev@gmail.com', 'Христо', 'Георгиев', 'P@r0lata20')
-        if not success:
-            print(data)
-            return
-
-    token = client.login('hristo', 'P@r0lata20')
-    print(client.check_token(token))
-    print(client.check_token(token + '@@@'))
-    print(client.logout(token))
-    print(client.logout(token))

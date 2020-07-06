@@ -4,3 +4,4 @@ flask_restplus
 invoke
 verify-email
 pytest
+bcrypt
