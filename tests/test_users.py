@@ -1,7 +1,17 @@
 from clients import UserClient
 
 
-def test_login():
+def test_login(users):
+    resp = users.get('/api/users/exists', query_string={'username': 'hristo'})
+    assert resp.status_code == 404
+
+    
+
+    print(dir(resp))
+
+    assert users.get('/api/users/exists')
+
+
     return
 
     client = UserClient()
