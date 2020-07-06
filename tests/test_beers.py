@@ -50,8 +50,14 @@ def test_products(users, beers, orders):
     assert resp.status_code == 201
     print(resp.data)
     
+    # Check that the beer is created in the list
+    
     # 6. Try to modify a beer without token
     resp = beers.put('/api/beers/', data=data)
     
     # 7. Modify a beer
     
+    
+    # 8. Delete a beer
+    # Check that the beer is removed frem the list
+
