@@ -34,16 +34,18 @@ class UserClient:
         raise ValueError('Received not supported status code.')
 
     def check_token(self, token):
-        if app.config['TESTING'] and token == 'TESTING_TOKEN':
-            user = dict()
-            user['id'] = 1
-            user['username'] = 'test'
-            user['email'] = 'test@example.com'
-            user['first_name'] = 'Test'
-            user['last_name'] = 'User'
-            user['time_registered'] = datetime.utcnow()
-            user['time_modified'] = None
-            return user
+        if app.config['TESTING']:
+            if token == 'TESTING_TOKEN':
+                user = dict()
+                user['id'] = 1
+                user['username'] = 'test'
+                user['email'] = 'test@example.com'
+                user['first_name'] = 'Test'
+                user['last_name'] = 'User'
+                user['time_registered'] = datetime.utcnow()
+                user['time_modified'] = None
+                return user
+            return False
 
         url = 'http://{}/api/users/check_token'.format(self.api_url)
         response = requests.post(url, data=dict(token=token))

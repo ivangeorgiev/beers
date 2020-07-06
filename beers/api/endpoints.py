@@ -64,7 +64,7 @@ class BeerItem(Resource):
         return beer
 
     @api.expect(beer_modify_arguments)
-    @api.response(204, 'Beer successfully updated.')
+    @api.marshal_with(beer_model)
     @api.response(401, 'You are not authorized to update beers.')
     @api.response(404, 'Beer does not exists.')
     def put(self, sku):
@@ -78,15 +78,17 @@ class BeerItem(Resource):
         if not client.check_token(args.get('Authorization')):
             return None, 401
 
-        beer = Beer.query.filter_by(sku=sku).one()
+        beer = Beer.query.filter_by(sku=sku).first()
+        if beer is None:
+            return None, 404
 
-        beer.update(
+        beer.modify(
             args.get('name'),
             args.get('price'),
             args.get('image')
         )
 
-        return None, 204
+        return beer
 
     @api.response(204, 'Beer successfully deleted.')
     @api.response(401, 'You are not authorized to delete beers.')
@@ -102,6 +104,9 @@ class BeerItem(Resource):
         if not client.check_token(args.get('Authorization')):
             return None, 401
 
-        beer = Beer.query.filter_by(sku=sku).one()
+        beer = Beer.query.filter_by(sku=sku).first()
+        if beer is None:
+            return None, 404
+
         beer.delete()
         return None, 204

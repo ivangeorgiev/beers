@@ -29,8 +29,7 @@ def test_products(users, beers, orders):
     # 2. Get an existing beer by SKU
     resp = beers.get('/api/beers/123456')
     assert resp.status_code == 200
-    
-    
+
     data = dict()
     data['sku'] = 6060
     data['name'] = 'Kozel'
@@ -43,21 +42,59 @@ def test_products(users, beers, orders):
     # 4. Try to create a beer with invalid token
     resp = beers.post('/api/beers/', data=data, headers={'Authorization': 'AAA'})
     assert resp.status_code == 401
-    print(resp.data)
     
     # 5. Create a beer with valid token
-    resp = beers.post('/api/beers/', data=data, headers={'Authorization': 'AAA'})
+    resp = beers.post('/api/beers/', data=data, headers={'Authorization': 'TESTING_TOKEN'})
     assert resp.status_code == 201
-    print(resp.data)
-    
-    # Check that the beer is created in the list
-    
-    # 6. Try to modify a beer without token
-    resp = beers.put('/api/beers/', data=data)
-    
-    # 7. Modify a beer
-    
-    
-    # 8. Delete a beer
-    # Check that the beer is removed frem the list
+    beer = json.loads(resp.data)
+    check_beer(beer, 'Kozel', '6060', '2.50')
 
+    resp = beers.get('/api/beers/')
+    assert resp.status_code == 200
+    data = json.loads(resp.data)
+    assert isinstance(data, list)
+    assert len(data) == 4
+
+    data = dict()
+    data['name'] = 'Heiniken'
+    data['price'] = '3.50'
+
+    # 6. Try to modify a beer without token
+    resp = beers.put('/api/beers/6060', data=data)
+    assert resp.status_code == 400
+
+    # 7. Modify a beer with wrong token
+    resp = beers.put('/api/beers/6060', data=data, headers = {'Authorization': 'AAA'})
+    assert resp.status_code == 401
+
+    # 8. Modify a beer
+    resp = beers.put('/api/beers/6060', data=data, headers={'Authorization': 'TESTING_TOKEN'})
+    assert resp.status_code == 200
+    beer = json.loads(resp.data)
+    check_beer(beer, 'Heiniken', '6060', '3.50')
+
+    # 9. Modify a non-existing beer
+    resp = beers.put('/api/beers/6061', data=data, headers={'Authorization': 'TESTING_TOKEN'})
+    assert resp.status_code == 404
+
+    # 10. Delete a beer without token
+    resp = beers.delete('/api/beers/6060', data=data)
+    assert resp.status_code == 400
+
+    # 11. Delete a beer with wrong token
+    resp = beers.delete('/api/beers/6060', data=data, headers={'Authorization': 'AAA'})
+    assert resp.status_code == 401
+
+    # 12. Delete a beer
+    resp = beers.delete('/api/beers/6060', data=data, headers={'Authorization': 'TESTING_TOKEN'})
+    assert resp.status_code == 204
+
+    # 13. Modify a non-existing beer
+    resp = beers.delete('/api/beers/6060', data=data, headers={'Authorization': 'TESTING_TOKEN'})
+    assert resp.status_code == 404
+
+    resp = beers.get('/api/beers/')
+    assert resp.status_code == 200
+    data = json.loads(resp.data)
+    assert isinstance(data, list)
+    assert len(data) == 3
