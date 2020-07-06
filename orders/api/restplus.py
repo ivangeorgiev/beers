@@ -1,7 +1,7 @@
 import logging
 import traceback
 from sqlalchemy.orm.exc import NoResultFound
-from flask_restplus import Api
+from flask_restx import Api
 from orders.settings import Settings
 
 log = logging.getLogger(__name__)

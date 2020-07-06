@@ -1,4 +1,4 @@
-from flask_restplus import fields
+from flask_restx import fields
 from beers.api.restplus import api
 
 beer_model = api.model('Beer', {

@@ -1,6 +1,6 @@
 import logging
-from flask import request, abort
-from flask_restplus import Resource
+from flask import request
+from flask_restx import Resource
 from users.api.restplus import api
 from users.api.serializers import user, parse_token
 from users.api.parsers import login_arguments, username_arguments, token_arguments, register_arguments

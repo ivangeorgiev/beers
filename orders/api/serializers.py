@@ -1,4 +1,4 @@
-from flask_restplus import fields
+from flask_restx import fields
 from orders.api.restplus import api
 
 order_model = api.model('Order', {

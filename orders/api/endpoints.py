@@ -1,6 +1,6 @@
 import logging
 from flask import request
-from flask_restplus import Resource
+from flask_restx import Resource
 from clients import UserClient, BeerClient
 
 from orders.api.restplus import api

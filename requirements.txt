@@ -1,6 +1,6 @@
 flask_sqlalchemy
 flask
-flask_restplus
+flask_restx
 invoke
 verify-email
 pytest

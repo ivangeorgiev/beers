@@ -1,6 +1,6 @@
 import logging
 from flask import request
-from flask_restplus import Resource
+from flask_restx import Resource
 from clients import UserClient
 from beers.api.restplus import api
 from beers.api.serializers import beer_model

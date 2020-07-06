@@ -1,5 +1,5 @@
 from verify_email import verify_email
-from flask_restplus import reqparse
+from flask_restx import reqparse
 from users.database.models import User
 
 

@@ -1,4 +1,4 @@
-from flask_restplus import reqparse
+from flask_restx import reqparse
 
 authorization_arguments = reqparse.RequestParser()
 authorization_arguments.add_argument('Authorization', type=str, required=True, help='Access token', location='headers')
