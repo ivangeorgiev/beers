@@ -9,6 +9,7 @@ def test_login(users, beers, orders):
 
     data = {'username': 'hristo', 'mail': 'hristo.i.georgiev@gmail.com', 'first_name': 'Hristo', 'last_name': 'Georgiev', 'password': '4csTJdx4'}
     resp = users.post('/api/users/register', data=data)
+    print(resp.data)
     assert resp.status_code == 200
     
     resp = users.get('/api/users/exists', query_string={'username': 'hristo'})
