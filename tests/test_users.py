@@ -4,10 +4,11 @@ import json
 def test_login(users, beers, orders):
     resp = users.get('/api/users/exists', query_string={'username': 'hristo'})
     assert resp.status_code == 404
-    
+
+    # TODO: input validation of register
+
     data = {'username': 'hristo', 'mail': 'hristo.i.georgiev@gmail.com', 'first_name': 'Hristo', 'last_name': 'Georgiev', 'password': '4csTJdx4'}
     resp = users.post('/api/users/register', data=data)
-    
     assert resp.status_code == 200
     
     resp = users.get('/api/users/exists', query_string={'username': 'hristo'})

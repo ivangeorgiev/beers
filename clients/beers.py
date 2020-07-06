@@ -18,16 +18,30 @@ class BeerClient:
         return response.json()
 
     def get(self, sku):
-        if app['TESTING'] and sku == 'TESTING_SKU':
-            beer = dict()
-            beer['id'] = 1
-            beer['name'] = 'Test beer'
-            beer['sku'] = 'TESTING_SKU'
-            beer['price'] = 2.5
-            beer['image'] = None
-            beer['time_created'] = datetime.utcnow()
-            beer['time_modified'] = None
-            return beer
+        if app.config['TESTING']:
+            if sku == 'TESTING_SKU':
+                beer = dict()
+                beer['id'] = 1
+                beer['name'] = 'Test beer'
+                beer['sku'] = 'TESTING_SKU'
+                beer['price'] = 2.5
+                beer['image'] = None
+                beer['time_created'] = datetime.utcnow()
+                beer['time_modified'] = None
+                return beer
+
+            if sku == 'ANOTHER_TESTING_SKU':
+                beer = dict()
+                beer['id'] = 1
+                beer['name'] = 'Another test beer'
+                beer['sku'] = 'ANOTHER_TESTING_SKU'
+                beer['price'] = 1.25
+                beer['image'] = None
+                beer['time_created'] = datetime.utcnow()
+                beer['time_modified'] = None
+                return beer
+
+            return None
 
         url = 'http://{}/api/beers/{}'.format(self.api_url, sku)
         response = requests.get(url)

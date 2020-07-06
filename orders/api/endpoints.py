@@ -38,7 +38,7 @@ class OrderCollection(Resource):
 class OrderItem(Resource):
     @api.response(401, 'You are not authorized to see orders.')
     @api.expect(authorization_arguments)
-    @api.marshal_list_with(order_with_beers)
+    @api.marshal_with(order_with_beers)
     def get(self):
         """
         Returns opened order of current user.
@@ -61,7 +61,7 @@ class OrderItem(Resource):
         """
         Adds a quantity of beers to the opened order of current user.
         """
-        args = authorization_arguments.parse_args(request)
+        args = add_beer_arguments.parse_args(request)
 
         if args.get('quantity') <= 0:
             return None, 400
@@ -87,7 +87,7 @@ class OrderItem(Resource):
         """
         Remove beers from the opened order of current user.
         """
-        args = authorization_arguments.parse_args(request)
+        args = remove_beer_arguments.parse_args(request)
 
         client = UserClient()
         user = client.check_token(args.get('Authorization'))
@@ -126,6 +126,7 @@ class OrderCheckout(Resource):
 @api.expect(authorization_arguments)
 class OrderDetails(Resource):
     @api.response(401, 'You are not authorized to search orders.')
+    @api.marshal_with(order_with_beers)
     def get(self, id):
         """
         Get details about an order
@@ -137,4 +138,8 @@ class OrderDetails(Resource):
         if not user:
             return None, 401
 
-        return Order.query.filter_by(owner_id=user['id'], id=id).one()
+        order = Order.query.filter_by(owner_id=user['id'], id=id).first()
+        if order is None:
+            return None, 404
+
+        return order

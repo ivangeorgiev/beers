@@ -1,7 +1,8 @@
+from flask import Flask
+from invoke import task
 from beers import serve_beers, setup_beers
 from orders import serve_orders, setup_orders
 from users import serve_users, setup_users
-from invoke import task
 
 
 @task

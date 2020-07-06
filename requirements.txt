@@ -5,3 +5,4 @@ invoke
 verify-email
 pytest
 bcrypt
+requests

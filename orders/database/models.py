@@ -50,12 +50,8 @@ class Order(db.Model):
         db.session.commit()
 
     def remove_beer(self, sku):
-        for beer in self.beers:
-            if beer.sku == sku:
-                self.beers.remove(beer)
-                db.session.add(self)
-                db.session.commit()
-                return
+        OrderBeer.query.filter_by(order_id=self.id, sku=sku).delete()
+        db.session.commit()
 
 
 class OrderBeer(db.Model):
