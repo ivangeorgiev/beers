@@ -68,6 +68,10 @@ def create_app(name=None, settings=None):
     if not name:
         name = __name__
     app = Flask(name)
+
+    from werkzeug.middleware.proxy_fix import ProxyFix
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
     initialize_app(app, settings)
     return app
 
