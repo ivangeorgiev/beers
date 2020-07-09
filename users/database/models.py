@@ -1,7 +1,7 @@
 import hashlib
 from datetime import datetime
 import bcrypt
-from users.app import db
+from core.database import db
 
 
 class User(db.Model):

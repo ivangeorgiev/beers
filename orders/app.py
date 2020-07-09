@@ -1,26 +1,27 @@
 import os
 import logging.config
 from flask import Flask, Blueprint
-from orders.settings import Settings
-from orders.database import db
-from orders.api.restplus import api
+from core.settings import Settings
+from core.database import db
+from core.api import api
 from orders.api.endpoints import order_ns
 
+app = Flask(__name__)
 
 logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))
 logging.config.fileConfig(logging_conf_path)
 log = logging.getLogger(__name__)
 
-
 def configure_app(flask_app):
-    flask_app.config['SERVER_NAME'] = Settings.FLASK_SERVER_NAME
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = Settings.SQLALCHEMY_DATABASE_URI
-    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = Settings.SQLALCHEMY_TRACK_MODIFICATIONS
-    flask_app.config['SWAGGER_UI_DOC_EXPANSION'] = Settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
-    flask_app.config['RESTPLUS_VALIDATE'] = Settings.RESTPLUS_VALIDATE
-    flask_app.config['RESTPLUS_MASK_SWAGGER'] = Settings.RESTPLUS_MASK_SWAGGER
-    flask_app.config['ERROR_404_HELP'] = Settings.RESTPLUS_ERROR_404_HELP
-
+    flask_app.config.from_object(Settings)
+    try:
+        from users.settings import Settings as LocalSettings
+        log.info('Local settings apply')
+        flask_app.config.from_object(LocalSettings)
+    except ImportError:
+        pass
+    except Exception as exc:
+        raise exc
 
 def initialize_app(flask_app):
     configure_app(flask_app)

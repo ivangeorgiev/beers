@@ -1,10 +1,10 @@
 import requests
-from orders.settings import Settings
-
+from flask import current_app as app
 
 class OrderClient:
-    def __init__(self, api_url=None):
-        self.api_url = api_url or Settings.FLASK_SERVER_NAME
+    @property
+    def api_url(self):
+        return app.config['FLASK_SERVER_NAME']
 
     def list(self, token):
         headers = dict()

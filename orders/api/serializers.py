@@ -1,5 +1,5 @@
 from flask_restx import fields
-from orders.api.restplus import api
+from core.api import api
 
 order_model = api.model('Order', {
     'id': fields.Integer(readOnly=True, description='The unique identifier of an order.'),

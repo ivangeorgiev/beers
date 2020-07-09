@@ -1,5 +1,5 @@
 from datetime import datetime
-from beers.app import db
+from core.database import db
 
 
 class Beer(db.Model):

@@ -2,7 +2,7 @@ import logging
 from flask import request
 from flask_restx import Resource
 from clients import UserClient
-from beers.api.restplus import api
+from core.api import api
 from beers.api.serializers import beer_model
 from beers.api.parsers import beer_create_arguments, authorization_arguments, beer_modify_arguments
 from beers.database.models import Beer

@@ -1,12 +1,12 @@
 import requests
 from datetime import datetime
 from flask import current_app as app
-from users.settings import Settings
-
 
 class UserClient:
-    def __init__(self, api_url=None):
-        self.api_url = api_url or Settings.FLASK_SERVER_NAME
+
+    @property
+    def api_url(self):
+        return app.config['FLASK_SERVER_NAME']
 
     def login(self, username, password):
         url = 'http://{}/api/users/login'.format(self.api_url)

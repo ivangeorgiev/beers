@@ -1,5 +1,5 @@
 from flask_restx import fields
-from users.api.restplus import api
+from core.api import api
 
 user = api.model('User', {
     'id': fields.Integer(readOnly=True, description='The unique identifier of an user.'),

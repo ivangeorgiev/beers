@@ -1,5 +1,5 @@
 from flask_restx import fields
-from beers.api.restplus import api
+from core.api import api
 
 beer_model = api.model('Beer', {
     'id': fields.Integer(readOnly=True, description='The unique identifier of a beer.'),
