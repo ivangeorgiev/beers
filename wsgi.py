@@ -1,3 +1,2 @@
-from core import create_app
+from core.wsgi import app
 
-app = create_app()

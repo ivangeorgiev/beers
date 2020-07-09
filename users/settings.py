@@ -1,2 +1,2 @@
 class Settings(object):
-    pass
+    APIS = ['users.api.endpoints:users_ns']

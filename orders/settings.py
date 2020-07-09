@@ -1,2 +1,2 @@
 class Settings(object):
-    pass
+    APIS = ['orders.api.endpoints:order_ns']

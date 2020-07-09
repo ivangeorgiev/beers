@@ -8,8 +8,8 @@ log = logging.getLogger(__name__)
 
 api = Api(
     version='1.0',
-    title='Beers API',
-    description='A simple beers management API powered by Flask RestPlus'
+    title='Brewery API',
+    description='Brewery management API'
 )
 
 

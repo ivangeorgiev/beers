@@ -1,2 +1,2 @@
 class Settings(object):
-    pass
+    APIS = ['beers.api.endpoints:beers_ns']

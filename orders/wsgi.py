@@ -1,4 +1,4 @@
-from .app import app
-from .app import initialize_app
+from core.app import create_app
+from .settings import Settings
 
-initialize_app(app)
+app = create_app(__name__, Settings)

@@ -1,4 +1,3 @@
-import logging
 from flask import request
 from flask_restx import Resource
 from clients import UserClient, BeerClient
@@ -8,10 +7,7 @@ from orders.api.serializers import order_model, order_with_beers
 from orders.api.parsers import authorization_arguments, add_beer_arguments, remove_beer_arguments
 from orders.database.models import Order
 
-log = logging.getLogger(__name__)
-
 order_ns = api.namespace('orders', description='Operations related to orders')
-
 
 @order_ns.route('/')
 class OrderCollection(Resource):
